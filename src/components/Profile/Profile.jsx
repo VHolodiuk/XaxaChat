@@ -23,6 +23,9 @@ function Profile(props) {
                 </div>
             </div>
             <div className='bottom'>
+                <button>
+                    {props.state.TextsApp[props.state.currentEn].profile}
+                </button>
             </div>
         </div>
     )

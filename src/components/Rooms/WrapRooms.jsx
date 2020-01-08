@@ -1,9 +1,12 @@
 import React from 'react';
 import WrapOutput from '../OneComponent/WrapOutput';
+import {NavLink} from "react-router-dom";
 
 function WrapRooms(props) {
 
     let WrapMap = props.rooms[props.state.TakeRoom].username.map( date => <WrapOutput text={date.name}/>);
+
+//   if (props.state.data.name) return <Redirect to={'/Chat/AddRoom'} />;
 
     return(
         <div className="WrapRooms">
@@ -23,7 +26,9 @@ function WrapRooms(props) {
             </div>
             <div className="bottom">
                 <button>
-                    {props.state.TextsApp[props.state.currentEn].rooms}
+                    <NavLink to="/Chat/AddRoom">
+                        {props.state.TextsApp[props.state.currentEn].rooms}
+                    </NavLink>
                 </button>
             </div>
         </div>

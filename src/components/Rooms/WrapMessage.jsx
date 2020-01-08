@@ -5,6 +5,7 @@ function WrapMessage(props) {
         <div className='WrapMessage'>
             <p className='nick'>{props.nick}</p>
             <p className='text'>{props.text}</p>
+            <p className='time'>{props.time}</p>
         </div>
     )
 }

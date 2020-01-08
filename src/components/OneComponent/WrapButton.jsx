@@ -2,7 +2,6 @@ import React from "react";
 
 function WrapButton(props) {
 
-    
     return(
         <div className="WrapButton">
             <p>{props.text}</p>

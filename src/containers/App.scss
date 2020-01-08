@@ -200,10 +200,23 @@ footer{
   position: fixed;
   top: calc(50% - 85px);
   right: calc(50% - 150px);
-  p{
+  .text{
     font-size: large;
   }
+  .exit{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: block;
+    text-align: center;
+    font-size: larger;
+    background: $grey;
+    width: 30px;
+    border-radius: 6px;
+    color: $textColor;
+  }
   input{
+    display: block;
     width: 120px;
     height: 30px;
     background: $fonsColor;
@@ -230,28 +243,27 @@ footer{
   box-shadow: $boxShadowM;
   position: fixed;
   width: 400px;
-  bottom: 100px;
+  min-height: 200px;
+  top: 100px;
   left: 20vw;
   padding: 10px;
+  padding-top: 30px;
   .exit{
-    height: 30px;
-    display: flex;
-    justify-content: flex-end;
-    .ClosePopup{
-      display: block;
-      text-align: center;
-      font-size: larger;
-      background: $grey;
-      width: 30px;
-      border-radius: 6px;
-      color: $textColor;
-    }
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 20px;
+    height: 20px;
+    border-radius: $borderRadiusS;
+    text-align: center;
+    font-size: larger;
+    background: $grey;
   }
   .text{
-    width: 100%;
-    text-align: left;
     color: $textColor;
+    width: 100%;
   }
+
 }
 //-------------------------------------------
 
@@ -438,17 +450,23 @@ footer{
           border-radius: $borderRadiusS;
           box-shadow: $boxShadowS;
           width: 100%;
-          height: 30px;
           background: $LabelColor;
           align-items: center;
           p{
-            color: $textColor;
             display: block;
+            height: 100%;
+            color: $textColor;
             padding: 1px 3px;
             text-align: left;
           }
           .nick{
             width: 80px;
+          }
+          .text{
+            width: calc(100% - 140px);
+          }
+          .time{
+            width: 40px;
           }
         }
       }
@@ -702,6 +720,7 @@ footer{
         border-bottom-right-radius: $borderRadiusS;
       }
       .RoomWrap{
+        overflow-y: scroll;
         padding: 5px;
         display: block;
         width: 80%;
@@ -774,11 +793,16 @@ footer{
 
 @media (max-width: 1199px){
   .ChatsWindow{
-    height: 55%;
+    height: 50%;
   }
 }
 
 @media (max-width: 799px){
+  .GameRules{
+    width: 80%;
+    left: 10%;
+    top: 10%;
+  }
   .Adds{
     display: none;
   }
@@ -907,7 +931,13 @@ footer{
         }
         .WrapRooms{
           min-height: 150px;
-          height: 100%;
+          max-height: 100%;
+          .top{
+            height: 100%;
+          }
+          .RoomWrap{
+            overflow-y: scroll;
+          }
           .bottom{
             display: none;
           }
@@ -919,9 +949,9 @@ footer{
       width: 100%;
       min-height: 500px;
       .ChatsWindow{
-        min-height: 400px;
+        height: 400px;
         .Canvas{
-          min-height: 390px;
+          height: 390px;
           display: block;
         }
         span{

@@ -1,6 +1,7 @@
 import React from 'react';
 import SendInput from '../OneComponent/SendInput';
 import Send from '../../img/Send.png';
+import {NavLink} from "react-router-dom";
 
 function ChatsBottom(props) {
 
@@ -24,7 +25,9 @@ function ChatsBottom(props) {
             </div>
             <div className='SendButton'>
                 <button>
+                <NavLink to="/Chat/rules">
                     {props.state.TextsApp[props.state.currentEn].rules}
+                </NavLink>
                 </button>
                 <button>
                     {props.state.TextsApp[props.state.currentEn].invite}

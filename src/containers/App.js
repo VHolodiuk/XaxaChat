@@ -16,6 +16,7 @@ class App extends Component{
 //    this.handleSubmit = this.handleSubmit.bind(this);
     this.enterAudit = this.enterAudit.bind(this);
     this.selectLanguage = this.selectLanguage.bind(this);
+    this.createRoom = this.createRoom.bind(this);
     this.swapRoom = this.swapRoom.bind(this);
     this.SendMessage = this.SendMessage.bind(this);
     this.registrationUser = this.registrationUser.bind(this);
@@ -33,10 +34,9 @@ class App extends Component{
         rools: 0,
         updatedData: {},
         updateRoom:{
-          texts:[
-                        
-          ],
-          name: 'Random'
+          texts:[],
+          username:[],
+          name: ''
         },
         displayStyle: "",
         currentId: "",
@@ -44,9 +44,9 @@ class App extends Component{
         currentEn: 0,
         TakeRoom: 0,
         TextsApp:[
-          {id:0, language: "En", nick: 'Nickname*', password: 'Password*', repeatpass:'Repeat password*', enter: "ENTER", registration: "Registration", nativleng: "Native language*", mail:"E-mail", year:"Born (year)*", profile:'Profile', rooms:"Rooms", addRoom:'Add my room', rules:'Rules', invite:'Invite', ignore:'Ignore', situation:'Situation: (He enters the room and asks:)', direct:'Direct speech: ("what`re you dooing here?")', LH:'Look History', ff:'for fun', donate:'Donate', iif:'if it`s funny'},
-          {id:1, language: "Uk", nick: 'Нікнейм*', password: 'Пароль*', repeatpass:'Повторіть пароль*', enter: "Вхід", registration: "Реєстрація", nativleng: "Рідна мова*", mail:"E-mail", year:"Народився (рік)*", profile:'Профіль', rooms:"Кімнати", addRoom:'Додати кімнату', rules:'Правила', invite:'Запросити', ignore:'Ігнор', situation:'Ситуація: (П`ятачок запитав:)', direct:'Пряма мова: ("Хіба я не влучив?")', LH:'Диви історію', ff:'та смійся', donate:'Донать', iif:'Якщо весело'},
-          {id:2, language: "Ru", nick: 'Никнейм*', password: 'Пароль*', repeatpass:'Поворите пароль*', enter: "Вход", registration: "Регистрация", nativleng: "родной язык*", mail:"E-mail", year:"Родился (год)*", profile:'Профиль', rooms:"Комнаты", addRoom:'Добавить комнату', rules:'Правила', invite:'Пригласить', ignore:'Игнор', situation:'Ситуация: (Пятачок спросил:)', direct:'Прямая речь: ("Я что не попал?")', LH:'Глянь историю', ff:'и смейся', donate:'Донать', iif:'Если весело'}
+          {id:0, language: "En", nick: 'Nickname*', password: 'Password*', repeatpass:'Repeat password*', enter: "ENTER", registration: "Registration", nativleng: "Native language*", mail:"E-mail", year:"Born (year)*", profile:'Profile', rooms:"Rooms", addRoom:'Add my room', rules:'Rules', invite:'Invite', ignore:'Ignore', situation:'Situation: (He enters the room and asks:)', direct:'Direct speech: ("what`re you dooing here?")', LH:'Look History', ff:'for fun', donate:'Donate', iif:'if it`s funny', rulesText:'To participate, imagine a situation with direct speech (for example: He enters the room and asks: "what are you doing here?") and write it in apropriate boxes. "Crazy Mixer" will add it to other nine and then show you a result. Resukts are summarized in the Room History. Create your own Room and invite your friends to have a fun together, when writting with them only your common Room History.'},
+          {id:1, language: "Uk", nick: 'Нікнейм*', password: 'Пароль*', repeatpass:'Повторіть пароль*', enter: "Вхід", registration: "Реєстрація", nativleng: "Рідна мова*", mail:"E-mail", year:"Народився (рік)*", profile:'Профіль', rooms:"Кімнати", addRoom:'Додати кімнату', rules:'Правила', invite:'Запросити', ignore:'Ігнор', situation:'Ситуація: (П`ятачок запитав:)', direct:'Пряма мова: ("Хіба я не влучив?")', LH:'Диви історію', ff:'та смійся', donate:'Донать', iif:'Якщо весело', rulesText:'Для участі уявіть ситуацію з прямою промовою (наприклад: Він заходить до кімнати і запитує: «що ви тут робите?») І запишіть її у відповідні поля. "Божевільний змішувач" додасть його до інших девяти, а потім покаже результат. Результати резюмуються в історії кімнат. Створіть свою власну кімнату та запросіть своїх друзів весело провести час, коли ви пишете з ними лише свою загальну історію кімнат.'},
+          {id:2, language: "Ru", nick: 'Никнейм*', password: 'Пароль*', repeatpass:'Поворите пароль*', enter: "Вход", registration: "Регистрация", nativleng: "родной язык*", mail:"E-mail", year:"Родился (год)*", profile:'Профиль', rooms:"Комнаты", addRoom:'Добавить комнату', rules:'Правила', invite:'Пригласить', ignore:'Игнор', situation:'Ситуация: (Пятачок спросил:)', direct:'Прямая речь: ("Я что не попал?")', LH:'Глянь историю', ff:'и смейся', donate:'Донать', iif:'Если весело', rulesText:'Чтобы принять участие, представьте ситуацию с прямой речью (например: он входит в комнату и спрашивает: «что вы здесь делаете?») И напишите ее в соответствующих клетках. «Сумасшедший миксер» добавит его к другим девяти, а затем покажет вам результат. Результаты суммированы в истории комнаты. Создайте свою собственную комнату и пригласите друзей повеселиться вместе, когда они пишут вместе с ними только вашу общую историю комнаты.'}
         ],
     };
   }
@@ -115,19 +115,20 @@ class App extends Component{
           alert('such nickname is already registered');
         }
       }
-      if (nickneim !== 'alredy') {   
-        // eslint-disable-next-line     
+      if (nickneim !== 'alredy') {
+        // eslint-disable-next-line   
         this.state.data.name = login;
         // eslint-disable-next-line
         this.state.data.password = password;
-        // eslint-disable-next-line     
+        // eslint-disable-next-line
         this.state.data.lang = this.state.currentEn;
         // eslint-disable-next-line
         this.state.data.mail = mail;
         // eslint-disable-next-line
         this.state.data.born = year;
         this.props.pushData("/api/users", this.state.data);
-        console.log(this.state.data);
+        this.props.rooms[0].username.push( {name: this.state.data.name} );
+        this.props.updateRoom(`/api/rooms/5e024acb79f9cd6a541c9709`, this.props.rooms[0]);
       }
     } 
   }
@@ -137,25 +138,19 @@ class App extends Component{
   };
 
   SendMessage(message){
-    // let exts = {
-    //   nick:this.state.data.name,
-    //   text:message,
-    //   time:"14:30"
-    // }; 
-    // eslint-disable-next-line
+    var date = new Date();
+    let nowTime = date.getHours() + ':' + date.getMinutes(); 
     let k = this.state.TakeRoom;
-    console.log(this.state.currentId);
     this.props.rooms[k].texts.push(
-      {nick:this.state.data.name, text:message, time:"14:30"}
+      {nick:this.state.data.name, text:message, time: nowTime }
     );
-//    this.state.updateRoom.name = this.props.rooms[k].name;
-    // this.setState({
-    //   name: this.props.rooms[0].name
-    // });
     this.props.updateRoom(`/api/rooms/${this.props.rooms[k]._id}`, this.props.rooms[k]);
-    // console.log(this.state.updateRoom); 
-    console.log(this.props.rooms[k]._id);
-   // this.rerender();
+  }
+
+  createRoom(name){
+    this.state.updateRoom.name = name;
+    this.state.updateRoom.username = {name: this.state.data.name};
+    this.props.pushRoom("/api/rooms", this.state.updateRoom);
   }
 
   swapRoom(side){
@@ -241,6 +236,7 @@ class App extends Component{
         <Route path="/Chat" render ={
           () => <WrapChat
             swapRoom={this.swapRoom}
+            createRoom={this.createRoom}
             state={this.state}
             rooms={this.props.rooms}
             SendMessage={this.SendMessage}
@@ -261,7 +257,8 @@ const mapStateToProps = (state) => {
     wasUpdated: state.usersUpdated,
     haErrored: state.roomsHasErrored,
     iLoading: state.roomsIsLoading,
-    waUpdated: state.roomsUpdated
+    waUpdated: state.roomsUpdated,
+    createRoom: state.createRoom
   };
 };
 
