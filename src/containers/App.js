@@ -128,7 +128,8 @@ class App extends Component{
         this.state.data.born = year;
         this.props.pushData("/api/users", this.state.data);
         this.props.rooms[0].username.push( {name: this.state.data.name} );
-        this.props.updateRoom(`/api/rooms/5e024acb79f9cd6a541c9709`, this.props.rooms[0]);
+        this.props.updateRoom(`/api/rooms/5e1c793a7ac2780e1acc6192`, this.props.rooms[0]);
+        localStorage.setItem("nick", login);
       }
     } 
   }
@@ -148,7 +149,9 @@ class App extends Component{
   }
 
   createRoom(name){
+    // eslint-disable-next-line
     this.state.updateRoom.name = name;
+    // eslint-disable-next-line
     this.state.updateRoom.username = {name: this.state.data.name};
     this.props.pushRoom("/api/rooms", this.state.updateRoom);
   }
@@ -201,6 +204,7 @@ class App extends Component{
             },
             currentEn: element.lang
           })
+          localStorage.setItem("nick", login);
         }
         else if(index === (this.props.users.length)){
           alert('wrong login or password');

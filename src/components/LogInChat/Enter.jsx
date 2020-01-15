@@ -7,9 +7,18 @@ function Enter(props) {
  
     let nickInput = React.createRef();   
     let passwordInput = React.createRef();
-
     // eslint-disable-next-line
     if (props.state.data.name) return <Redirect to={'/Chat'} />;
+
+    //let currentNick = localStorage.getItem("nick");    
+    // let k;
+
+    // if (!localStorage.getItem["nick"]){
+    //     k = localStorage.getItem("nick");
+    // }
+    // else {
+    //     k = '';
+    // }
 
     let takeInput = () =>{
         let login = nickInput.current.value;
@@ -17,13 +26,16 @@ function Enter(props) {
         props.enterAudit(login, password);
         nickInput.current.value = '';
         passwordInput.current.value = '';
-    }
+    };
+    //alert(localStorage.getItem("nick"));
+
+    //nickInput.current.value = localStorage.getItem("nick");
 
     return(
         <div className="Enter">
             <div className='Inputs'>
-                <WrapInput text={props.state.TextsApp[props.state.currentEn].nick} Input={nickInput}/>
-                <WrapInput text={props.state.TextsApp[props.state.currentEn].password} Input={passwordInput}/>
+                <WrapInput text={props.state.TextsApp[props.state.currentEn].nick} Input={nickInput} type={"text"}/>
+                <WrapInput text={props.state.TextsApp[props.state.currentEn].password} Input={passwordInput} type={"password"}/>
             </div>
             <div className='WrapLanguage'>
                 <button onClick={ (language) => props.selectLanguage(0)}>{props.state.TextsApp[0].language}</button>

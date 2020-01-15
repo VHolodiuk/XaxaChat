@@ -26,18 +26,18 @@ function Registration(props) {
 
     return(
         <div className="Registration">
-            <WrapInput Input={nickInput} text={props.state.TextsApp[props.state.currentEn].nick}/>
-            <WrapInput Input={passwordInput} text={props.state.TextsApp[props.state.currentEn].password}/>
-            <WrapInput Input={rePasswordInput} text={props.state.TextsApp[props.state.currentEn].repeatpass}/>
+            <WrapInput Input={nickInput} text={props.state.TextsApp[props.state.currentEn].nick} type={"text"}/>
+            <WrapInput Input={passwordInput} text={props.state.TextsApp[props.state.currentEn].password} type={"password"}/>
+            <WrapInput Input={rePasswordInput} text={props.state.TextsApp[props.state.currentEn].repeatpass} type={"password"}/>
             <div className='leng'>
                 <p>{props.state.TextsApp[props.state.currentEn].nativleng}</p>
                 <NavLink to="/my-app/registration/ListLanguages" className='NavLink'>
                     {props.state.TextsApp[props.state.currentEn].language}
                 </NavLink>
             </div>
-            <WrapInput Input={mailInput} text={props.state.TextsApp[props.state.currentEn].mail}/>
-            <WrapInput Input={yearInput} text={props.state.TextsApp[props.state.currentEn].year}/>
-            <WrapButton click={takeInput} text={props.state.TextsApp[props.state.currentEn].registration}/>
+            <WrapInput Input={mailInput} text={props.state.TextsApp[props.state.currentEn].mail} type={"text"}/>
+            <WrapInput Input={yearInput} text={props.state.TextsApp[props.state.currentEn].year} type={"text"}/>
+            <WrapButton click={takeInput} text={props.state.TextsApp[props.state.currentEn].registration} type={"text"}/>
         </div>
     );
 }

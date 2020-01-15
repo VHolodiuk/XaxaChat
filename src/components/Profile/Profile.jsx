@@ -2,6 +2,16 @@ import React from 'react';
 import Avatar from '../../img/avatar.png';
 
 function Profile(props) {
+
+    let k;
+
+    if (!localStorage.getItem["nick"]){
+        k = localStorage.getItem("nick");
+    }
+    else {
+        k = props.state.data.name;
+    }
+
     return(
         <div className="Profile">
             <div className="top">
@@ -10,7 +20,10 @@ function Profile(props) {
                 </div>
                 <div className="WrapData">
                     <p className="LabelNick">
-                        {props.state.data.name}
+{//                     {localStorage.getItem("nick")}
+                        //{props.state.data.name}
+}
+                    {k}                   
                     </p>
                     <div className="star">
                         <svg className="starIco" id="v2" viewBox="0 0 16 16">
