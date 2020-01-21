@@ -22,6 +22,7 @@ function Login(props) {
                     registrationUser={props.registrationUser}
                     selectLanguage={props.selectLanguage}
                     state={props.state}
+                    createRoom={props.createRoom}
                 />
             }/>
             <Route path="/my-app/registration/ListLanguages" render = {

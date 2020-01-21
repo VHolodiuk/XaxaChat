@@ -14,6 +14,7 @@ function WrapLogin(props) {
                 enterAudit={props.enterAudit}
                 selectLanguage={props.selectLanguage}
                 registrationUser={props.registrationUser}
+                createRoom={props.createRoom}
                 state={props.state}
             />
             <Footer/>

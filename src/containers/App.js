@@ -2,11 +2,12 @@ import React, {Component} from 'react';
 import './App.scss';
 import {Route} from 'react-router-dom';
 import {connect} from 'react-redux';
-import Adds from './../components/Adds';
-import WrapLogin from './../components/LogInChat/WrapLogin';
-import WrapChat from './../components/WindowChat/WrapChat';
-import {usersFetchData, usersPushData, usersUpdateData, usersDeleteData} from '../actions/users';
-import {roomsFetchData, roomsPushData, roomsUpdateData, roomsDeleteData} from '../actions/rooms';
+import Adds from '../../src/components/Adds';
+import WrapLogin from '../../src/components/LogInChat/WrapLogin';
+import WrapChat from '../../src/components/WindowChat/WrapChat';
+import {usersFetchData, usersPushData, usersUpdateData, usersDeleteData} from '../../src/actions/users';
+import {roomsFetchData, roomsPushData, roomsUpdateData, roomsDeleteData} from '../../src/actions/rooms';
+//import CreateRoom from '../components/popup/CreateRoom';
 
 class App extends Component{
 
@@ -42,7 +43,9 @@ class App extends Component{
         currentId: "",
         EnterChange: '',
         currentEn: 0,
+        RoomId: 0,
         TakeRoom: 0,
+        RoomBuild: "",
         TextsApp:[
           {id:0, language: "En", nick: 'Nickname*', password: 'Password*', repeatpass:'Repeat password*', enter: "ENTER", registration: "Registration", nativleng: "Native language*", mail:"E-mail", year:"Born (year)*", profile:'Profile', rooms:"Rooms", addRoom:'Add my room', rules:'Rules', invite:'Invite', ignore:'Ignore', situation:'Situation: (He enters the room and asks:)', direct:'Direct speech: ("what`re you dooing here?")', LH:'Look History', ff:'for fun', donate:'Donate', iif:'if it`s funny', rulesText:'To participate, imagine a situation with direct speech (for example: He enters the room and asks: "what are you doing here?") and write it in apropriate boxes. "Crazy Mixer" will add it to other nine and then show you a result. Resukts are summarized in the Room History. Create your own Room and invite your friends to have a fun together, when writting with them only your common Room History.'},
           {id:1, language: "Uk", nick: 'Нікнейм*', password: 'Пароль*', repeatpass:'Повторіть пароль*', enter: "Вхід", registration: "Реєстрація", nativleng: "Рідна мова*", mail:"E-mail", year:"Народився (рік)*", profile:'Профіль', rooms:"Кімнати", addRoom:'Додати кімнату', rules:'Правила', invite:'Запросити', ignore:'Ігнор', situation:'Ситуація: (П`ятачок запитав:)', direct:'Пряма мова: ("Хіба я не влучив?")', LH:'Диви історію', ff:'та смійся', donate:'Донать', iif:'Якщо весело', rulesText:'Для участі уявіть ситуацію з прямою промовою (наприклад: Він заходить до кімнати і запитує: «що ви тут робите?») І запишіть її у відповідні поля. "Божевільний змішувач" додасть його до інших девяти, а потім покаже результат. Результати резюмуються в історії кімнат. Створіть свою власну кімнату та запросіть своїх друзів весело провести час, коли ви пишете з ними лише свою загальну історію кімнат.'},
@@ -99,7 +102,7 @@ class App extends Component{
   //   })
   // }
 
-  registrationUser(login, password, repassword, mail, year){
+  registrationUser(login, password, repassword, mail, year, nativLeng){
     if (!login || !password || !repassword || !year) {
       alert('input your data');    
     }
@@ -154,38 +157,84 @@ class App extends Component{
     // eslint-disable-next-line
     this.state.updateRoom.username = {name: this.state.data.name};
     this.props.pushRoom("/api/rooms", this.state.updateRoom);
+    setTimeout(() => (this.state.RoomBuild = 1), 2000);
   }
 
-  swapRoom(side){
+  swapRoom(side, step = 1 ){
     let k;
     if(side === 'right') 
     {
-      k = +this.state.TakeRoom + 1;
-      if (k === this.props.rooms.length) {
+      k = +this.state.TakeRoom + step;
+
+      if (k >= this.props.rooms.length) {
         k = 0;
+        // eslint-disable-next-line
+        this.state.TakeRoom = k;
+        // eslint-disable-next-line
+        this.state.RoomId = k;
+        this.setState({
+           TakeRoom: k,
+           RoomId: k
+        })
       }
-      if (k < 0){
-        k = this.props.rooms.length;
+
+      else{
+        for (let index = 0; index < this.props.rooms[k].username.length; index++) {
+          if (this.state.data.name === this.props.rooms[k].username[index].name) {
+            // eslint-disable-next-line
+            this.state.TakeRoom = k;
+            // eslint-disable-next-line
+            this.state.RoomId = k;
+            this.setState({
+               TakeRoom: k,
+               RoomId: k
+            })
+          }
+          else {
+            this.state.TakeRoom = k;
+            // eslint-disable-next-line
+            this.state.RoomId = k;
+            // eslint-disable-next-line
+            this.setState({
+               TakeRoom: k,
+               RoomId: k
+            })
+            this.swapRoom('right', 1);
+          }
+        }
       }
-      this.setState({
-        TakeRoom: k
-      })
     }
 
     if(side === 'left')
     {
-      k = +this.state.TakeRoom + 1;
-      if (k === this.props.rooms.length) {
-        k = 0;
+      k = +this.state.RoomId - step;
+      if (k < 0) {
+        this.state.RoomId = this.props.rooms.length;
+        this.setState({
+          RoomId: this.props.rooms.length 
+        })
+        this.swapRoom('left');
       }
-      if (k < 0){
-        k = this.props.rooms.length;
+      else{
+        for (let index = 0; index < this.props.rooms[k].username.length; index++) {
+          if (this.state.data.name === this.props.rooms[k].username[index].name) {
+            this.state.RoomId = k;
+          }
+          else {
+            this.setState({
+              RoomId: +k - 1 
+            })
+            this.state.RoomId = +k - 1; 
+            this.swapRoom('left');
+          }
+        }
       }
+      // eslint-disable-next-line
+      this.state.TakeRoom = this.state.RoomId;
       this.setState({
-        TakeRoom: k,
-        currentId: this.props.rooms[k]._id
+         TakeRoom: this.state.RoomId
       })
-  }
+    }
   }
 
   enterAudit(login, password){
@@ -204,7 +253,12 @@ class App extends Component{
             },
             currentEn: element.lang
           })
+          // eslint-disable-next-line
+          this.state.data.name = login;
+          // eslint-disable-next-line
+          this.state.data.lang = this.state.currentEn;
           localStorage.setItem("nick", login);
+          localStorage.setItem("lang", this.state.currentEn);
         }
         else if(index === (this.props.users.length)){
           alert('wrong login or password');
@@ -224,7 +278,7 @@ class App extends Component{
 
     setTimeout(() => {
       this.componentDidMount();
-    }, 3000);
+    }, 1000);
 
     return(
       <div className="App">
@@ -233,6 +287,7 @@ class App extends Component{
           () => <WrapLogin
             enterAudit={this.enterAudit}
             selectLanguage={this.selectLanguage}
+            createRoom={this.createRoom}
             registrationUser={this.registrationUser}
             state={this.state}
           />
